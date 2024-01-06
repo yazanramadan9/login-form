@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import TanstackProvider from "@/frontend/components/providers/tanstack";
+import "@/styles/globals.css";
+import TanstackProvider from "@/components/providers/tanstack";
+import NextAuthSessionProvider from "@/components/providers/session";
+import Header from "@/components/shared/header";
+import Footer from "@/components/shared/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +20,16 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>
-				<TanstackProvider>{children}</TanstackProvider>
+			<body className={`${inter.className} min-w-[380px]`}>
+				<NextAuthSessionProvider>
+					<TanstackProvider>
+						<main className='flex flex-col justify-between gap-4 min-h-screen bg-slate-50'>
+							<Header />
+							{children}
+							<Footer />
+						</main>
+					</TanstackProvider>
+				</NextAuthSessionProvider>
 			</body>
 		</html>
 	);
